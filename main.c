@@ -81,3 +81,73 @@ void tambahBelakang(Node **head, char *npm, char *nama, char *jurusan, int semes
     }
     temp->next = newNode;
 }
+
+
+// Menghapus data tertentu pada sistem absensi:
+void hapusData(Node **head, char *npm, char *nama, char *jurusan, int semester, char *tanggal) {
+    Node *temp = *head;
+    Node *prev = NULL;
+    while (temp != NULL && (strcmp(temp->npm, npm) != 0 || strcmp(temp->tanggal, tanggal) != 0)) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL) return;
+    if (prev == NULL) {
+        *head = temp->next;
+    } else {
+        prev->next = temp->next;
+    }
+    free(temp);
+}
+
+// Menampilkan semua data dalam bentuk tabel:
+void tampilkan(Node *head) {
+    if (head == NULL) {
+        printf("\nBelum ada data.\n");
+        return;
+    }
+    printf("\n+-----------------+---------------------------+--------------------------+----------+--------------------+\n");
+    printf("| %-15s | %-25s | %-24s | %-8s | %-18s |\n", "NPM", "Nama", "Jurusan", "Semester", "Tanggal");
+    printf("+-----------------+---------------------------+--------------------------+----------+--------------------+\n");
+    Node *temp = head;
+    while (temp != NULL) {
+        printf("| %-15s | %-25s | %-24s | %-8d | %-18s |\n",
+            temp->npm, temp->nama, temp->jurusan, temp->semester, temp->tanggal);
+        temp = temp->next;
+    }
+    printf("+-----------------+---------------------------+--------------------------+----------+--------------------+\n");
+}
+
+// Membersihkan memori saat program selesai:
+void freeLinkedList(Node **head) {
+    Node *temp;
+    while (*head != NULL) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+}
+
+// Menyalin data ke array biar aman:
+void linkedListToArray(Node *head, Node arr[], int *size) {
+    *size = 0;
+    Node *temp = head;
+    while (temp != NULL) {
+        strcpy(arr[*size].npm, temp->npm);
+        strcpy(arr[*size].nama, temp->nama);
+        strcpy(arr[*size].jurusan, temp->jurusan);
+        arr[*size].semester = temp->semester;
+        strcpy(arr[*size].tanggal, temp->tanggal);
+        strcpy(arr[*size].kunciSort, temp->kunciSort);
+        (*size)++;
+        temp = temp->next;
+    }
+}
+
+// Memindahkan data dari array balik ke linked list:
+void arrayToLinkedList(Node **head, Node arr[], int size) {
+    freeLinkedList(head);
+    for (int i = 0; i < size; i++) {
+        tambahBelakang(head, arr[i].npm, arr[i].nama, arr[i].jurusan, arr[i].semester, arr[i].tanggal);
+    }
+}
