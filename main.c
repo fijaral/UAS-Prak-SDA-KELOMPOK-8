@@ -176,3 +176,29 @@ int main() {
 
         scanf("%d", &pilihan);
 
+        switch(pilihan) {
+            case 1:
+                printf("Masukkan NPM: ");
+                scanf(" %[^\n]s", npm);
+
+                printf("Masukkan Nama Lengkap: ");
+                scanf(" %[^\n]s", nama);
+
+                printf("Masukkan Jurusan: ");
+                scanf(" %[^\n]s", jurusan);
+
+                printf("Masukkan Semester: ");
+                scanf("%d", &semester);
+
+                printf("Masukkan Tanggal (DD-MM-YYYY): ");
+                scanf(" %[^\n]s", tanggal);
+
+                tambahBelakang(&head, npm, nama, jurusan, semester, tanggal);
+                pushUndo(npm, nama, jurusan, semester, tanggal); // Simpan history
+                simpanKeFile(head); // Simpan urutan ASLI ke file
+                printf("Data berhasil ditambahkan!\n");
+                break;
+
+            case 2:
+                tampilkan(head);
+                break;
