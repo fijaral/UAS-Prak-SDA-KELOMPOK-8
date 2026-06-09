@@ -202,3 +202,17 @@ int main() {
             case 2:
                 tampilkan(head);
                 break;
+
+            case 3: // undo
+                {
+                    StackItem item = popUndo();
+                    if (strlen(item.npm) > 0) {
+                        printf("Undo: Menghapus %s - %s\n", item.npm, item.nama);
+                        hapusData(&head, item.npm, item.nama, item.jurusan, item.semester, item.tanggal);
+                        simpanKeFile(head); // Update file setelah undo
+                        printf("Undo berhasil!\n");
+                    } else {
+                        printf("Tidak ada aksi yang bisa di-undo.\n");
+                    }
+                }
+                break;
