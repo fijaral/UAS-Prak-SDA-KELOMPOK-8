@@ -151,3 +151,28 @@ void arrayToLinkedList(Node **head, Node arr[], int size) {
         tambahBelakang(head, arr[i].npm, arr[i].nama, arr[i].jurusan, arr[i].semester, arr[i].tanggal);
     }
 }
+
+// Program sistem absensi dengan fitur riwayat undo:
+int main() {
+    Node *head = NULL;
+    int pilihan;
+    char npm[15], nama[50], jurusan[50], tanggal[11];
+    int semester;
+    Node arr[100];
+    int size;
+
+    bacaDariFile(&head);
+
+    do {
+        printf("\n===== SISTEM ABSENSI =====\n");
+        printf("1. Tambah Absensi\n");
+        printf("2. Tampilkan Semua Data\n");
+        printf("3. Undo\n");
+        printf("4. Urutkan berdasarkan Tanggal\n");
+        printf("5. Urutkan berdasarkan Nama\n");
+        printf("6. Tampilkan Urutan Asli\n");
+        printf("0. Keluar & Simpan\n");
+        printf("Pilih menu: ");
+
+        scanf("%d", &pilihan);
+
