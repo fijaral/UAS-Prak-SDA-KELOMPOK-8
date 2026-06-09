@@ -216,3 +216,51 @@ int main() {
                     }
                 }
                 break;
+
+            case 4:
+                linkedListToArray(head, arr, &size);
+                if (size > 0) {
+                    insertionSortTanggal(arr, size);
+                    arrayToLinkedList(&head, arr, size);
+                    printf("Data diurutkan berdasarkan Tanggal!\n");
+                    tampilkan(head);
+                    // // hapus baris ini -> topUndo = -1;
+                } else {
+                    printf("Tidak ada data.\n");
+                }
+                break;
+
+            case 5:
+                linkedListToArray(head, arr, &size);
+                if (size > 0) {
+                    bubbleSortNama(arr, size);
+                    arrayToLinkedList(&head, arr, size);
+                    printf("Data diurutkan berdasarkan Nama!\n");
+                    tampilkan(head);
+                    // // hapus baris ini -> topUndo = -1;
+                } else {
+                    printf("Tidak ada data.\n");
+                }
+                break;
+
+            case 6: // kembali ke urutan asli
+                printf("Mengembalikan ke urutan input asli...\n");
+                freeLinkedList(&head);
+                bacaDariFile(&head); // baca ulang dari file asli
+                tampilkan(head);
+                break;
+
+            case 0:
+                simpanKeFile(head);
+                printf("Terima kasih! Program selesai.\n");
+                freeLinkedList(&head);
+                break;
+
+            default:
+                printf("Pilihan tidak valid!\n");
+        }
+
+    } while(pilihan != 0);
+
+    return 0;
+}
