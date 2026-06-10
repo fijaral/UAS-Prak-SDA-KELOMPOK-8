@@ -152,7 +152,7 @@ void arrayToLinkedList(Node **head, Node arr[], int size) {
     }
 }
 
-3
+
 // Fungsi insertion sort (untuk urutan tanggal):
 void insertionSortTanggal(Node arr[], int size) {
     int i, j;
