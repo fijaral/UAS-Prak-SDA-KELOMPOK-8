@@ -152,6 +152,87 @@ void arrayToLinkedList(Node **head, Node arr[], int size) {
     }
 }
 
+3
+// Fungsi insertion sort (untuk urutan tanggal):
+void insertionSortTanggal(Node arr[], int size) {
+    int i, j;
+    Node key;
+    for (i = 1; i < size; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && strcmp(arr[j].kunciSort, key.kunciSort) > 0) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+// Fungsi bubble sort (untuk urutan nama):
+void bubbleSortNama(Node arr[], int size) {
+    int i, j;
+    Node temp;
+    for (i = 0; i < size - 1; i++) {
+        for (j = 0; j < size - i - 1; j++) {
+            if (strcasecmp(arr[j].nama, arr[j + 1].nama) > 0) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Menyimpan data ke dalam file absensi.txt:
+void simpanKeFile(Node *head) {
+    FILE *file = fopen("absensi.txt", "w");
+    if (file == NULL) {
+        printf("Gagal menyimpan file!\n");
+        return;
+    }
+    Node *temp = head;
+    while (temp != NULL) {
+        fprintf(file, "%s;%s;%s;%d;%s\n", temp->npm, temp->nama, temp->jurusan, temp->semester, temp->tanggal);
+        temp = temp->next;
+    }
+    fclose(file);
+}
+
+// Membaca data dari file absensi.txt:
+void bacaDariFile(Node **head) {
+    FILE *file = fopen("absensi.txt", "r");
+    if (file == NULL) {
+        return;
+    }
+    char line[200];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        char npm[15], nama[50], jurusan[50], tanggal[11];
+        int semester;
+        char *token = strtok(line, ";");
+        if (!token) continue;
+        strcpy(npm, token);
+
+        token = strtok(NULL, ";");
+        if (!token) continue;
+        strcpy(nama, token);
+
+        token = strtok(NULL, ";");
+        if (!token) continue;
+        strcpy(jurusan, token);
+
+        token = strtok(NULL, ";");
+        if (!token) continue;
+        semester = atoi(token);
+
+        token = strtok(NULL, "\n");
+        if (!token) continue;
+        strcpy(tanggal, token);
+
+        tambahBelakang(head, npm, nama, jurusan, semester, tanggal);
+    }
+    fclose(file);
+}
+
 // Program sistem absensi dengan fitur riwayat undo:
 int main() {
     Node *head = NULL;
